@@ -1,0 +1,11 @@
+﻿<h1 style="color: blue; font-size: 20px;">Upload and Convert Excel to XML</h1>
+
+<form method="post" enctype="multipart/form-data" asp-action="Upload">
+    <input type="file" name="file" />
+    <button type="submit">Upload File</button>
+</form>
+
+@if (Model != null)
+{
+    <p>@Model</p>
+}
