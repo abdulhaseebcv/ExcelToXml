@@ -1,0 +1,55 @@
+<Data>
+  <Row>
+    <Column1>
+    </Column1>
+    <Column2>Organization Code</Column2>
+    <Column3>Full Name</Column3>
+    <Column4>Address 1</Column4>
+    <Column5>Addres 2</Column5>
+    <Column6>Country</Column6>
+    <Column7>City</Column7>
+    <Column8>Post Code</Column8>
+    <Column9>TVA</Column9>
+    <Column10>Account Group</Column10>
+    <Column11>External Code</Column11>
+    <Column12>Receivable</Column12>
+    <Column13>Payable</Column13>
+  </Row>
+  <Row>
+    <Column1>
+    </Column1>
+    <Column2>PISMAG</Column2>
+    <Column3>PISCINES MAGILINE</Column3>
+    <Column4>3 RUE DU LABOURAT</Column4>
+    <Column5>
+    </Column5>
+    <Column6>FR</Column6>
+    <Column7>TROYES</Column7>
+    <Column8>10000</Column8>
+    <Column9>
+    </Column9>
+    <Column10>
+    </Column10>
+    <Column11>
+    </Column11>
+    <Column12>Yes</Column12>
+    <Column13>Yes</Column13>
+  </Row>
+  <Row>
+    <Column1>
+    </Column1>
+    <Column2>EMOTRACDG</Column2>
+    <Column3>EMO TRANS FRANCE SAS</Column3>
+    <Column4>14 RUE DE LA BELLE BORNE - ZONE CARGO 8</Column4>
+    <Column5>SOGARIS BAT 5 CELLULE 3</Column5>
+    <Column6>FR</Column6>
+    <Column7>TREMBLAY-EN-FRANCE</Column7>
+    <Column8>95723</Column8>
+    <Column9>FR49752926493</Column9>
+    <Column10>ESS</Column10>
+    <Column11>
+    </Column11>
+    <Column12>Yes</Column12>
+    <Column13>Yes</Column13>
+  </Row>
+</Data>

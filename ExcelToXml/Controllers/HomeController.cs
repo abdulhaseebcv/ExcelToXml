@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using NPOI.HSSF.UserModel;
-using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
-using System;
-using System.IO;
+using NPOI.XSSF.UserModel;
 using System.Xml;
 
 public class HomeController : Controller
 {
     [HttpGet]
-    public IActionResult Index()
+    public IActionResult Index(string message = null, string xmlFileName = null)
     {
-        return View();
+        var model = (message, xmlFileName);
+        return View(model);
     }
 
     [HttpPost]
@@ -19,28 +18,45 @@ public class HomeController : Controller
     {
         if (file == null || file.Length == 0)
         {
-            return View("Index", "No file uploaded.");
+            return RedirectToAction("Index", new { message = "No file uploaded." });
         }
 
         if (!(file.FileName.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ||
               file.FileName.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase)))
         {
-            return View("Index", "Invalid file format. Only XLS and XLSX files are supported.");
+            return RedirectToAction("Index", new { message = "Invalid file format. Only XLS and XLSX files are supported." });
         }
 
         try
         {
-            ProcessFileAndGenerateXml(file);
-            return View("Index", "File uploaded and processed successfully.");
+            var result = ProcessFileAndGenerateXml(file);
+            return RedirectToAction("Index", new { message = result.message, xmlFileName = result.xmlFileName });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, "An error occurred while processing the file.");
+            return StatusCode(500, $"An error occurred while processing the file: {ex.Message}");
         }
     }
 
-    private void ProcessFileAndGenerateXml(Microsoft.AspNetCore.Http.IFormFile file)
+    public IActionResult DownloadXml(string fileName)
     {
+        if (string.IsNullOrEmpty(fileName))
+            return NotFound();
+
+        string xmlFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+
+        if (!System.IO.File.Exists(xmlFilePath))
+            return NotFound();
+
+        var fileStream = new FileStream(xmlFilePath, FileMode.Open);
+        return File(fileStream, "application/xml", fileName);
+    }
+
+    private (string message, string xmlFileName) ProcessFileAndGenerateXml(Microsoft.AspNetCore.Http.IFormFile file)
+    {
+        string xmlFileName = $"output_{DateTime.Now:yyyyMMddHHmmssfff}.xml";
+        string xmlFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", xmlFileName);
+
         using (var stream = new MemoryStream())
         {
             file.CopyTo(stream);
@@ -80,9 +96,9 @@ public class HomeController : Controller
                 }
             }
 
-            string xmlFileName = $"output_{DateTime.Now:yyyyMMddHHmmssfff}.xml";
-            string xmlFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", xmlFileName);
             xmlDoc.Save(xmlFilePath);
         }
+
+        return ("File uploaded and processed successfully.", xmlFileName);
     }
 }

@@ -1,11 +1,20 @@
-﻿<h1 style="color: blue; font-size: 20px;">Upload and Convert Excel to XML</h1>
+﻿@model (string message, string xmlFileName)
+
+<h1 style="color: blue; font-size: 20px;">Upload and Convert Excel to XML</h1>
 
 <form method="post" enctype="multipart/form-data" asp-action="Upload">
     <input type="file" name="file" />
     <button type="submit">Upload File</button>
 </form>
 
-@if (Model != null)
+@if (!string.IsNullOrEmpty(Model.message))
 {
-    <p>@Model</p>
+    <p>@Model.message</p>
+}
+
+@if (!string.IsNullOrEmpty(Model.xmlFileName))
+{
+    <h2>Generated XML:</h2>
+
+    <a href="@Url.Action("DownloadXml", new { fileName = Model.xmlFileName })">Download XML File</a>
 }
